@@ -4,6 +4,7 @@ import "./../styles/App.css";
 const App = () => {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const fetchData = () => {
     setLoading(true);
@@ -14,8 +15,9 @@ const App = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error fetching data:", err);
+        console.error("An error occurred:", err);
         setLoading(false);
+        setError(true);
       });
   };
 
@@ -27,7 +29,13 @@ const App = () => {
     <div>
       {/* Do not remove the main div */}
       {loading && <p>Loading...</p>}
-      {data && data}
+      {error && <p>An error occurred:</p>}
+      {data && (
+        <>
+          <h1>Data Fetched from API</h1>
+          <p>{data}</p>
+        </>
+      )}
     </div>
   );
 };
